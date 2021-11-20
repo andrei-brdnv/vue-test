@@ -31,7 +31,13 @@ export const productsModule = {
             }
         },
         sortedAndSearchedProducts(state, getters) {
-            return getters.sortedProducts.filter(product => product.title.toLowerCase().includes(state.searchQuery.toLowerCase()))
+            return getters.sortedProducts.filter(product => {
+                return (
+                    product.title.toLowerCase().includes(state.searchQuery.toLowerCase())
+                    || product.price.toString().includes(state.searchQuery.toString())
+                    || product.description.toLowerCase().includes(state.searchQuery.toLowerCase())
+                )
+            })
         }
     },
     mutations: {
@@ -44,6 +50,9 @@ export const productsModule = {
         createProduct(state, product) {
             state.products.unshift(product)
         },
+        deleteProduct(state, product) {
+            state.products = state.products.filter(p => p.id !== product.id)
+        }
     },
     actions: {
 

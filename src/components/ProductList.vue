@@ -7,10 +7,10 @@
           :product="product"
       />
     </transition-group>
-    <h3 v-if="products.length === 0">
-      Нет товаров
-    </h3>
   </div>
+  <h3 v-if="products.length === 0">
+    В списке больше нет товаров
+  </h3>
 </template>
 
 <script>
@@ -35,5 +35,34 @@ export default {
     grid-gap: 20px;
 
     width: 100%;
+  }
+
+  h3 {
+    font-size: 20px;
+    text-align: center;
+    margin: 50px 0;
+  }
+
+  // Transition Group
+  .product-list-enter-active {
+    transition: all 0.5s ease-out;
+  }
+
+  .product-list-leave-active {
+    transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+
+  .product-list-leave-to {
+    transform: translateY(-1000px);
+    opacity: 0;
+  }
+
+  .product-list-enter-from {
+    transform: scale(0.15);
+    opacity: 0;
+  }
+
+  .product-list-move {
+    transition: transform 0.5s ease-out;
   }
 </style>

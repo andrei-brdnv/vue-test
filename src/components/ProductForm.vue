@@ -77,7 +77,7 @@ export default {
 
   methods: {
     ...mapMutations({
-      createProduct: 'product/createProduct',
+      createProduct: 'products/createProduct',
     }),
 
     validateTitle(event) {
@@ -137,11 +137,7 @@ export default {
   }
 
   .form-header {
-    font-weight: 600;
-    font-size: 28px;
     line-height: 36px;
-
-    color: #3F3F3F;
     margin-bottom: 16px;
   }
 

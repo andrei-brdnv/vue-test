@@ -68,4 +68,11 @@ export default {
     width: 100%;
     height: 100%;
   }
+
+  h3 {
+    font-weight: 600;
+    font-size: 28px;
+
+    color: #3F3F3F;
+  }
 </style>

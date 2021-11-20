@@ -1,15 +1,24 @@
 <template>
-  <div class="product-card">
+  <div class="product-card" @click="$router.push(`/products/${product.id}`)">
     <img class="product-image" :src=product.image :alt=product.title />
     <div class="product-info">
       <div class="product-title">{{ product.title }}</div>
       <div class="product-description">{{ product.description }}</div>
       <div class="product-price">{{ product.price }} руб.</div>
     </div>
+    <div class="delete-icon" @click.stop="removeProduct">
+      <font-awesome-icon :icon="['far', 'trash-alt']" />
+    </div>
   </div>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
+
+library.add(faTrashAlt)
+
 export default {
   props: {
     product: {
@@ -17,6 +26,15 @@ export default {
       required: true,
     }
   },
+
+  methods: {
+    ...mapMutations({
+      deleteProduct: 'products/deleteProduct'
+    }),
+    removeProduct() {
+      this.deleteProduct(this.product)
+    }
+  }
 }
 </script>
 
@@ -28,10 +46,17 @@ export default {
 
     text-align: left;
     position: relative;
+    cursor: pointer;
 
     background: #FFFEFB;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
+
+    &:hover {
+      .delete-icon {
+        display: flex;
+      }
+    }
   }
 
   .product-image {
@@ -71,5 +96,26 @@ export default {
     position: absolute;
     bottom: 16px;
     left: 16px;
+  }
+
+  .delete-icon {
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: -6px;
+    right: -6px;
+
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    background-color: #FF8484;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+
+    svg {
+      color: #ffffff;
+    }
   }
 </style>
