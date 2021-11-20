@@ -2,7 +2,7 @@
   <div class="form-container">
     <h3 class="form-header">Добавление товара</h3>
 
-    <form class="form" @submit.prevent="submit" method="post">
+    <form class="form" @submit.prevent="submit">
       <p class="form-item">
         <label :for=product.title>Наименование товара</label>
         <input
@@ -107,6 +107,7 @@ export default {
       this.errors.price = []
 
       if (!value) this.errors.price.push('Поле является обязательным')
+      //this.product.price.replace(/\s/g, '')
       // if (!value.match(/^[0-9]+$/)) this.errors.price.push('Пожалуйста, введите числа')
     },
 
@@ -117,6 +118,8 @@ export default {
 
       if (this.product.title && this.product.image && this.product.price) {
         this.product.id = Date.now()
+        this.product.price = this.product.price.replace(/\s/g, '')
+
         this.createProduct(this.product)
 
         this.product = {
@@ -126,7 +129,7 @@ export default {
           price: null,
         }
       }
-    }
+    },
   },
 }
 </script>
@@ -138,7 +141,7 @@ export default {
 
   .form-header {
     line-height: 36px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
 
   .form {
@@ -161,17 +164,23 @@ export default {
     flex-direction: column;
     position: relative;
     margin-bottom: 24px;
+  }
 
-    &:last-of-type {
-      margin-bottom: 28px;
-    }
+  .form-item:not(:nth-child(2)) label::after {
+    content: "\2022";
+    position: absolute;
+    top: -5px;
+
+    color: #FF8484;
   }
 
   label {
+    display: block;
     margin-bottom: 8px;
     font-size: 15px;
     line-height: 15px;
     color: #49485E;
+    position: relative;
   }
 
   .form-input,
@@ -202,7 +211,7 @@ export default {
 
   .form-input {
     &.error {
-      border: 1px solid #FF8484
+      border: 1px solid #FF8484;
     }
   }
 

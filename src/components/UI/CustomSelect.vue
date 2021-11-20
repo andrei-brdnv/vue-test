@@ -1,7 +1,7 @@
 <template>
   <div>
     <select @change="handleOptionChange">
-      <option selected disabled>По умолчанию</option>
+      <option selected hidden>По умолчанию</option>
       <option
           v-for="option in options"
           :key="option.value"
@@ -50,5 +50,11 @@ export default {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     color: #B4B4B4;
+  }
+
+  option {
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
   }
 </style>

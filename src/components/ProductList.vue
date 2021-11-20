@@ -31,7 +31,7 @@ export default {
 <style lang="scss" scoped>
   .product-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 20px;
 
     width: 100%;
@@ -50,10 +50,11 @@ export default {
 
   .product-list-leave-active {
     transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);
+    //transition: all 0.4s ease-out;
   }
 
   .product-list-leave-to {
-    transform: translateY(-1000px);
+    transform: scale(0.5) translateY(-500px) !important;
     opacity: 0;
   }
 
@@ -63,6 +64,6 @@ export default {
   }
 
   .product-list-move {
-    transition: transform 0.5s ease-out;
+    transition: transform 0.5s ease;
   }
 </style>

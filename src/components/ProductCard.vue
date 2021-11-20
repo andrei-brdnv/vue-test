@@ -4,7 +4,7 @@
     <div class="product-info">
       <div class="product-title">{{ product.title }}</div>
       <div class="product-description">{{ product.description }}</div>
-      <div class="product-price">{{ product.price }} руб.</div>
+      <div class="product-price">{{ priceWithThousandthSpaces }} руб.</div>
     </div>
     <div class="delete-icon" @click.stop="removeProduct">
       <font-awesome-icon :icon="['far', 'trash-alt']" />
@@ -33,6 +33,12 @@ export default {
     }),
     removeProduct() {
       this.deleteProduct(this.product)
+    },
+  },
+
+  computed: {
+    priceWithThousandthSpaces() {
+      return this.product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
     }
   }
 }
@@ -52,7 +58,11 @@ export default {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
     border-radius: 5px;
 
+    transition: transform 0.3s ease-out;
+
     &:hover {
+      transform: scale(1.015);
+
       .delete-icon {
         display: flex;
       }
@@ -113,9 +123,19 @@ export default {
     background-color: #FF8484;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    transition: box-shadow 0.15s ease-out;
+
+    &:hover {
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+
+      svg {
+        transform: scale(1.15);
+      }
+    }
 
     svg {
       color: #ffffff;
+      transition: transform 0.15s ease-out;
     }
   }
 </style>

@@ -66,6 +66,6 @@ export default {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
 </style>
