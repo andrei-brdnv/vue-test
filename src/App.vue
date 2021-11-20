@@ -10,7 +10,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
   * {
     padding: 0;
     margin: 0;
@@ -34,6 +34,14 @@ export default {
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: transparent;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: darkgrey;
+    }
   }
 
   body {

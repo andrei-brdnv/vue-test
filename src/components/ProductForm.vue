@@ -1,6 +1,7 @@
 <template>
   <div class="form-container">
     <h3 class="form-header">Добавление товара</h3>
+
     <form class="form" @submit.prevent="submit" method="post">
       <p class="form-item">
         <label :for=product.title>Наименование товара</label>
@@ -73,6 +74,7 @@ export default {
       price: []
     }
   }),
+
   methods: {
     ...mapMutations({
       createProduct: 'product/createProduct',
@@ -116,7 +118,6 @@ export default {
       if (this.product.title && this.product.image && this.product.price) {
         this.product.id = Date.now()
         this.createProduct(this.product)
-        console.log(this.product)
 
         this.product = {
           title: null,
@@ -131,11 +132,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .form-container {
+    position: fixed;
+  }
+
   .form-header {
-    font-style: normal;
     font-weight: 600;
     font-size: 28px;
-    line-height: 28px;
+    line-height: 36px;
+
     color: #3F3F3F;
     margin-bottom: 16px;
   }
@@ -144,7 +149,11 @@ export default {
     display: flex;
     flex-direction: column;
     padding: 24px;
-    max-width: 340px;
+    width: 340px;
+
+    font-family: "Source Sans Pro", sans-serif;
+    font-style: normal;
+    font-weight: normal;
 
     background: #FFFEFB;
     box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04), 0px 6px 10px rgba(0, 0, 0, 0.02);
@@ -164,10 +173,6 @@ export default {
 
   label {
     margin-bottom: 8px;
-
-    font-family: "Source Sans Pro", sans-serif;
-    font-style: normal;
-    font-weight: normal;
     font-size: 15px;
     line-height: 15px;
     color: #49485E;
@@ -181,7 +186,7 @@ export default {
     font-size: 14px;
     line-height: 36px;
 
-    padding: 0 16px;
+    padding: 10px 16px;
     height: 36px;
     border: 1px solid transparent;
     background: #FFFEFB;
@@ -206,28 +211,26 @@ export default {
   }
 
   .form-textarea {
+    line-height: 18px;
     resize: vertical;
     min-height: 100px;
     max-height: 200px;
   }
 
   .form-error {
-    font-family: "Source Sans Pro", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    color: #FF8484;
-
     position: absolute;
     top: 62px;
     left: 0;
+    font-size: 12px;
+    color: #FF8484;
   }
 
   .submit-button {
-    height: 36px;
     font-family: "Inter", sans-serif;
     font-size: 14px;
     line-height: 14px;
+
+    height: 36px;
     border: none;
     cursor: pointer;
     color: #FFFFFF;
