@@ -58,4 +58,11 @@ export default {
       color: #B4B4B4;
     }
   }
+
+  @media screen and (max-width: 480px) {
+    .search-input {
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+  }
 </style>

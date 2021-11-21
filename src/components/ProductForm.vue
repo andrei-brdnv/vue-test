@@ -1,6 +1,18 @@
 <template>
-  <div class="form-container">
-    <h3 class="form-header">Добавление товара</h3>
+  <div
+      :class="[isMobileFormOpened ? 'active' : '', 'form-container']"
+  >
+    <div class="form-header">
+      <h3>Добавление товара</h3>
+      <div class="close-form-button">
+        <font-awesome-icon
+            icon="times"
+            @click="closeMobileForm"
+        />
+      </div>
+
+    </div>
+
 
     <form class="form" @submit.prevent="submit">
       <p class="form-item">
@@ -56,8 +68,12 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapState} from "vuex";
 import formattedInputPrice from "@/utils/formattedInputPrice";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faTimes)
 
 export default {
   data: () => ({
@@ -75,10 +91,22 @@ export default {
     }
   }),
 
+  computed: {
+    ...mapState({
+      isMobileFormOpened: state => state.products.isMobileFormOpened
+    }),
+  },
+
   methods: {
     ...mapMutations({
       createProduct: 'products/createProduct',
+      setIsMobileFormOpened: 'products/setIsMobileFormOpened',
     }),
+
+    closeMobileForm() {
+      this.setIsMobileFormOpened(false)
+      document.body.style.overflow = 'auto'
+    },
 
     validateTitle(event) {
       const { value } = event.target
@@ -140,8 +168,15 @@ export default {
   }
 
   .form-header {
-    line-height: 36px;
     margin-bottom: 20px;
+
+    h3 {
+      line-height: 36px;
+    }
+
+    .close-form-button {
+      display: none;
+    }
   }
 
   .form {
@@ -242,5 +277,51 @@ export default {
     background-color: #7BAE73;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .form-container {
+      transform: translateX(-100%);
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      width: 100%;
+      height: 100vh;
+      background: #FFFEFB;
+      opacity: 0.75;
+      padding-top: 32px;
+      transition: all 0.3s ease-out;
+    }
+
+    .form-container.active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .form-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      margin-bottom: 0;
+
+      h3 {
+        font-size: 20px;
+      }
+
+      .close-form-button {
+        display: block;
+        padding: 10px;
+        font-size: 20px;
+        color: #3F3F3F;
+      }
+    }
+
+    .form {
+      width: 100%;
+      height: 100%;
+      padding: 12px;
+    }
   }
 </style>

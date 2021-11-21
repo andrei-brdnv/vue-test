@@ -138,4 +138,10 @@ export default {
       transition: transform 0.15s ease-out;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .delete-icon {
+      display: flex;
+    }
+  }
 </style>

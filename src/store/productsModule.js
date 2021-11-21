@@ -5,6 +5,7 @@ export const productsModule = {
         products: mockupData,
         searchQuery: '',
         selectedSort: '',
+        isMobileFormOpened: false,
         sortOptions: [
             {value: 'title', name: 'По названию'},
             {value: 'descPrice', name: 'Цена по убыванию'},
@@ -35,12 +36,15 @@ export const productsModule = {
                 return (
                     product.title.toLowerCase().includes(state.searchQuery.toLowerCase())
                     || product.price.toString().includes(state.searchQuery.toString())
-                    || product.description.toLowerCase().includes(state.searchQuery.toLowerCase())
+                    || product.description?.toLowerCase().includes(state.searchQuery.toLowerCase())
                 )
             })
         }
     },
     mutations: {
+        setIsMobileFormOpened(state, bool) {
+            state.isMobileFormOpened = bool
+        },
         setSearchQuery(state, searchQuery) {
             state.searchQuery = searchQuery
         },

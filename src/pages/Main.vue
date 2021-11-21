@@ -1,5 +1,12 @@
 <template>
   <div class="container">
+    <div
+        class="open-form-button"
+        @click="openMobileForm"
+    >
+      <font-awesome-icon icon="plus" />
+    </div>
+
     <product-form />
     <div class="main-content">
 
@@ -25,6 +32,10 @@ import ProductList from "@/components/ProductList";
 import SearchInput from "@/components/SearchInput";
 import CustomSelect from "@/components/UI/CustomSelect";
 import { mapState, mapGetters, mapMutations } from "vuex";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faPlus)
 
 export default {
   components: { ProductForm, ProductList, SearchInput, CustomSelect },
@@ -33,7 +44,12 @@ export default {
     ...mapMutations({
       setSelectedSort: 'products/setSelectedSort',
       setSearchQuery: 'products/setSearchQuery',
+      setIsMobileFormOpened: 'products/setIsMobileFormOpened',
     }),
+    openMobileForm() {
+      this.setIsMobileFormOpened(true)
+      document.body.style.overflow = 'hidden'
+    }
   },
 
   computed: {
@@ -41,6 +57,7 @@ export default {
       products: state => state.products.products,
       selectedSort: state => state.products.selectedSort,
       sortOptions: state => state.products.sortOptions,
+      //isMobileFormOpened: state => state.products.isMobileFormOpened
     }),
     ...mapGetters({
       sortedProducts: 'products/sortedProducts',
@@ -67,5 +84,50 @@ export default {
     justify-content: space-between;
     width: 100%;
     margin-bottom: 20px;
+  }
+
+  .open-form-button {
+    display: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    .open-form-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #90a4ae;
+      margin-bottom: 20px;
+
+      svg {
+        font-size: 20px;
+        color: #3F3F3F;
+      }
+    }
+
+    .container {
+      position: relative;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .main-content {
+      width: 100%;
+      padding-left: 0;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .container {
+      padding: 32px 12px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .main-upper {
+      flex-direction: column;
+    }
   }
 </style>

@@ -49,12 +49,12 @@ export default {
   }
 
   .product-list-leave-active {
-    transition: all 0.4s cubic-bezier(1, 0.5, 0.8, 1);
+    transition: all 0.35s cubic-bezier(1, 0.5, 0.8, 1);
     //transition: all 0.4s ease-out;
   }
 
   .product-list-leave-to {
-    transform: scale(0.5) translateY(-500px) !important;
+    transform: scale(0) !important;
     opacity: 0;
   }
 

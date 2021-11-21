@@ -1,5 +1,4 @@
 <template>
-  <div>
     <select @change="handleOptionChange">
       <option selected hidden>По умолчанию</option>
       <option
@@ -10,7 +9,6 @@
         {{ option.name }}
       </option>
     </select>
-  </div>
 </template>
 
 <script>
@@ -56,5 +54,11 @@ export default {
     -webkit-appearance:none;
     -moz-appearance:none;
     appearance:none;
+  }
+
+  @media screen and (max-width: 480px) {
+    select {
+      width: 100%;
+    }
   }
 </style>
