@@ -1,4 +1,5 @@
 <template>
+  <!-- Страница товара -->
   <div class="product-page">
     <div @click="$router.push('/')">
       <font-awesome-icon icon="arrow-left" />

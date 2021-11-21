@@ -13,17 +13,21 @@ export const productsModule = {
             {value: 'ascPrice', name: 'Цена по возрастанию'},
         ],
     }),
+
     getters: {
         sortedProducts(state) {
             switch (state.selectedSort) {
+                // Сортируем по названию товара
                 case "title":
                     return [...state.products].sort((a, b) => {
                         return a[state.selectedSort]?.localeCompare(b[state.selectedSort])
                     })
+                // Сортируем по убыванию цены
                 case "descPrice":
                     return [...state.products].sort((a, b) => {
                         return b.price - a.price
                     })
+                // Сортируем по возрастанию цены
                 case "ascPrice":
                     return [...state.products].sort((a, b) => {
                         return a.price - b.price
@@ -32,6 +36,7 @@ export const productsModule = {
                     return state.products
             }
         },
+        // Поиск по названию, описанию и цене
         sortedAndSearchedProducts(state, getters) {
             return getters.sortedProducts.filter(product => {
                 return (
@@ -42,6 +47,7 @@ export const productsModule = {
             })
         }
     },
+
     mutations: {
         setIsMobileFormOpened(state, bool) {
             state.isMobileFormOpened = bool
@@ -62,8 +68,10 @@ export const productsModule = {
             state.products = state.products.filter(p => p.id !== product.id)
         }
     },
+
     actions: {
 
     },
+
     namespaced: true,
 }

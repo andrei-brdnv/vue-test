@@ -1,20 +1,19 @@
 <template>
-  <div
-      :class="[isMobileFormOpened ? 'active' : '', 'product-form']"
-  >
+  <!-- Динамический класс для показа формы добавления товара на мобильных устройствах -->
+  <div :class="[isMobileFormOpened ? 'active' : '', 'product-form']" v-click-outside="onClickOutside">
     <div class="product-form_header">
       <h3>Добавление товара</h3>
       <div class="product-form_close-icon">
+        <!-- Иконка закрытия формы на мобильных устройствах -->
         <font-awesome-icon
             icon="times"
             @click="closeMobileForm"
         />
       </div>
-
     </div>
-
-
+    <!-- Основной блок формы -->
     <form class="product-form_form" @submit.prevent="submit">
+      <!-- Элемент поля добавления наименования товара product.title -->
       <p class="product-form_form-item">
         <label :for=product.title>Наименование товара</label>
         <input
@@ -26,7 +25,7 @@
         />
         <span class="product-form_form-error" v-if="errors.title">{{ errors.title[0] }}</span>
       </p>
-
+      <!-- Элемент поля добавления описания товара product.description -->
       <p class="product-form_form-item">
         <label :for="product.description">Описание товара</label>
         <textarea
@@ -36,7 +35,7 @@
         >
         </textarea>
       </p>
-
+      <!-- Элемент поля добавления изображения товара product.image -->
       <p class="product-form_form-item">
         <label :for="product.description">Ссылка на изображение товара</label>
         <input
@@ -48,7 +47,7 @@
         />
         <span class="product-form_form-error" v-if="errors.image">{{ errors.image[0] }}</span>
       </p>
-
+      <!-- Элемент поля добавления цены товара product.price -->
       <p class="product-form_form-item">
         <label :for="product.price">Цена товара</label>
         <input
@@ -63,8 +62,14 @@
       </p>
 
       <button class="product-form_form-submit-button" type="submit" value="">Добавить товар</button>
+      <!-- Сообщение об успешном добавлении товара -->
       <transition name="message">
-        <div v-if="isProductCreated" class="product-form_success-message">Товар успешно добавлен в список</div>
+        <div
+            v-if="isProductCreated"
+            class="product-form_success-message"
+        >
+          Товар успешно добавлен в список
+        </div>
       </transition>
     </form>
 
@@ -82,6 +87,7 @@ library.add(faTimes)
 
 export default {
   data: () => ({
+    // Маска для поля ввода цены
     formattedInputPrice,
     product: {
       title: null,
@@ -109,12 +115,16 @@ export default {
       setIsMobileFormOpened: 'products/setIsMobileFormOpened',
       setIsProductCreated: 'products/setIsProductCreated',
     }),
-
+    // Используем клик вне области формы, чтобы сбросить сообщения об ошибках в инпутах
+    onClickOutside() {
+      Object.keys(this.errors).map(key => this.errors[key] = [])
+    },
+    // Обработка закрытия формы на мобильных устройствах, возвращение скролла на body
     closeMobileForm() {
       this.setIsMobileFormOpened(false)
       document.body.style.overflow = 'auto'
     },
-
+    // Валидация названия товара
     validateTitle(event) {
       const { value } = event.target
       this.errors.title = []
@@ -122,47 +132,50 @@ export default {
 
       if (!value) this.errors.title.push('Поле является обязательным')
     },
-
+    // Валидация изображения товара
     validateImage(event) {
       const { value } = event.target
       this.errors.image = []
-
+      // Проверяем, что в поле добавлен только URL
       const pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
           '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
           '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
           '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
           '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
           '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-
+      // Если поле ещё пустое, показываем сообщение об ошибке
       if (!value) this.errors.image.push('Поле является обязательным')
+      // Если не добавлен URL, показываем сообщение об ошибке
       if (!pattern.test(value)) this.errors.image.push('Пожалуйста, добавьте ссылку')
     },
-
+    // Валидация цены товара
     validatePrice(event) {
       let { value } = event.target
       this.errors.price = []
 
       if (!value) this.errors.price.push('Поле является обязательным')
-      //this.product.price.replace(/\s/g, '')
+      // Проверяем, что введены только числа, иначе показываем сообщение об ошибке
       // if (!value.match(/^[0-9]+$/)) this.errors.price.push('Пожалуйста, введите числа')
     },
 
     submit() {
-      if (!this.product.title) this.errors.title.push('Поле является обязательным')
-      if (!this.product.image) this.errors.image.push('Поле является обязательным')
-      if (!this.product.price) this.errors.price.push('Поле является обязательным')
+      // Проверяем если мы ничего не ввели и объект ошибки ещё пустой, то добавляем сообщение об ошибке к каждому полю соответственно
+      if (!this.product.title && !this.errors.title.length) this.errors.title.push('Поле является обязательным')
+      if (!this.product.image && !this.errors.image.length) this.errors.image.push('Поле является обязательным')
+      if (!this.product.price && !this.errors.price.length) this.errors.price.push('Поле является обязательным')
 
       if (this.product.title && this.product.image && this.product.price) {
         this.product.id = Date.now()
+        // В массив данных добавляем сумму без пробела
         this.product.price = this.product.price.replace(/\s/g, '')
 
         this.createProduct(this.product)
-
+        // Показываем сообщение об успешном добавлении под кнопкой добавить товар
         this.setIsProductCreated(true)
         setTimeout(() => {
           this.setIsProductCreated(false)
         }, 3000)
-
+        // Сбрасываем поля ввода
         this.product = {
           title: null,
           description: null,
@@ -246,6 +259,14 @@ export default {
       resize: vertical;
       min-height: 100px;
       max-height: 200px;
+
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: darkgrey;
+      }
     }
 
     &_form-error {
@@ -278,16 +299,11 @@ export default {
       font-size: 16px;
       width: 100%;
       text-align: center;
-      //transition: all 0.5s ease-out;
-
-      //background: linear-gradient(-45deg, rgba(238, 119, 82, 0.5), rgba(231, 60, 126, 0.5), rgba(35, 166, 213, 0.5), rgba(35, 213, 171, 0.5));
-      //background-size: 100% 100%;
-      //animation: Gradient 3s ease infinite;
-      //overflow: hidden;
 
       background: linear-gradient(to right, #388e3c 40%, #fff9c4 48%, #fff9c4 52%, #388e3c 60%);
       background-size: 200% auto;
       animation: shine 3s linear 1s 1;
+
       @keyframes shine {
         to {
           background-position: 200% center;
@@ -301,7 +317,7 @@ export default {
       -webkit-text-fill-color: transparent;
     }
 
-    // transition
+    // transition для сообщения об успешном добавлении товара внизу формы
     .message-enter-active,
     .message-leave-active {
       transition: opacity 0.75s ease-out;
@@ -312,141 +328,6 @@ export default {
       opacity: 0;
     }
   }
-  /*.form-container {
-    position: fixed;
-  }
-
-  .form-header {
-    margin-bottom: 20px;
-
-    h3 {
-      line-height: 36px;
-    }
-
-    .close-form-button {
-      display: none;
-    }
-  }
-
-  .form {
-    display: flex;
-    flex-direction: column;
-    padding: 24px 24px 14px 24px;
-    width: 340px;
-
-    font-family: "Source Sans Pro", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-
-    background: #FFFEFB;
-    box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04), 0px 6px 10px rgba(0, 0, 0, 0.02);
-    border-radius: 4px;
-  }
-
-  .form-item {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-bottom: 24px;
-  }
-
-  .form-item:last-of-type {
-    margin-bottom: 32px;
-  }
-
-  .form-item:not(:nth-child(2)) label::after {
-    content: "\2022";
-    position: absolute;
-    top: -5px;
-
-    color: #FF8484;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 15px;
-    line-height: 15px;
-    color: #49485E;
-    position: relative;
-  }
-
-
-  .form-input {
-    &.error {
-      border: 1px solid #FF8484;
-    }
-  }
-
-  .form-textarea {
-    line-height: 18px;
-    resize: vertical;
-    min-height: 100px;
-    max-height: 200px;
-  }
-
-  .form-error {
-    position: absolute;
-    top: 62px;
-    left: 0;
-    font-size: 12px;
-    color: #FF8484;
-  }
-
-  .submit-button {
-    font-family: "Inter", sans-serif;
-    font-size: 14px;
-    line-height: 14px;
-
-    height: 36px;
-    margin-bottom: 10px;
-    border: none;
-    cursor: pointer;
-    color: #FFFFFF;
-    background-color: #7BAE73;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
-
-  .success-message {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    width: 100%;
-    text-align: center;
-    //transition: all 0.5s ease-out;
-
-    //background: linear-gradient(-45deg, rgba(238, 119, 82, 0.5), rgba(231, 60, 126, 0.5), rgba(35, 166, 213, 0.5), rgba(35, 213, 171, 0.5));
-    //background-size: 100% 100%;
-    //animation: Gradient 3s ease infinite;
-    //overflow: hidden;
-
-    background: linear-gradient(to right, #388e3c 40%, #fff9c4 48%, #fff9c4 52%, #388e3c 60%);
-    background-size: 200% auto;
-    animation: shine 3s linear 1s 1;
-    @keyframes shine {
-      to {
-        background-position: 200% center;
-      }
-    }
-
-    color: white;
-    background-clip: content-box;
-    text-fill-color: transparent;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .message-enter-active,
-  .message-leave-active {
-    transition: opacity 0.75s ease-out;
-  }
-
-  .message-enter-from,
-  .message-leave-to {
-    opacity: 0;
-  }*/
 
   @media screen and (max-width: 768px) {
     .product-form {
@@ -491,49 +372,6 @@ export default {
         min-height: 100vh;
         padding: 12px;
       }
-    }
-    .form-container {
-      transform: translateX(-100%);
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 10;
-      width: 100%;
-      height: 100vh;
-      background: #FFFEFB;
-      opacity: 0.75;
-      padding-top: 32px;
-      transition: all 0.3s ease-out;
-    }
-
-    .form-container.active {
-      transform: translateX(0);
-      opacity: 1;
-    }
-
-    .form-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 12px;
-      margin-bottom: 0;
-
-      h3 {
-        font-size: 20px;
-      }
-
-      .close-form-button {
-        display: block;
-        padding: 10px;
-        font-size: 20px;
-        color: #3F3F3F;
-      }
-    }
-
-    .form {
-      width: 100%;
-      min-height: 100vh;
-      padding: 12px;
     }
   }
 </style>

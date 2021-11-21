@@ -16,6 +16,7 @@ export default {
     ...mapMutations({
       setSearchQuery: 'products/setSearchQuery',
     }),
+    // Связываем поле поиска с ключом searchQuery в vuex
     searchQueryVal(event) {
       this.setSearchQuery(event.target.value)
     }

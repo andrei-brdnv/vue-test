@@ -37,6 +37,7 @@ export default {
   },
 
   computed: {
+    // Разделяем сумму на тысячные для корректного отображения в карточке товара
     priceWithThousandthSpaces() {
       return this.product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
     }
@@ -119,7 +120,7 @@ export default {
       height: 32px;
       cursor: pointer;
       background-color: #FF8484;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
       transition: box-shadow 0.15s ease-out;
 
@@ -137,76 +138,6 @@ export default {
       }
     }
   }
-
-  /*.product-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 5px 5px 0 0;
-  }
-
-  .product-info {
-    padding: 16px;
-  }
-
-  .product-title {
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 25px;
-
-    margin-bottom: 16px;
-    color: #3F3F3F;
-  }
-
-  .product-description {
-    font-size: 16px;
-    line-height: 20px;
-
-    color: #3F3F3F;
-    margin-bottom: 50px;
-  }
-
-  .product-price {
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 30px;
-
-    color: #3F3F3F;
-    position: absolute;
-    bottom: 16px;
-    left: 16px;
-  }
-
-  .delete-icon {
-    display: none;
-    align-items: center;
-    justify-content: center;
-
-    position: absolute;
-    top: -6px;
-    right: -6px;
-
-    width: 32px;
-    height: 32px;
-    cursor: pointer;
-    background-color: #FF8484;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    transition: box-shadow 0.15s ease-out;
-
-    &:hover {
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
-
-      svg {
-        transform: scale(1.15);
-      }
-    }
-
-    svg {
-      color: #ffffff;
-      transition: transform 0.15s ease-out;
-    }
-  }*/
 
   @media screen and (max-width: 768px) {
     .product-card {

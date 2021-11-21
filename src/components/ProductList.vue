@@ -1,4 +1,5 @@
 <template>
+  <!-- Если продуктов нет, то список не монтируем -->
   <div class="product-list" v-if="products.length > 0">
     <transition-group name="product-list">
       <product-card
@@ -8,6 +9,7 @@
       />
     </transition-group>
   </div>
+  <!-- Показываем сообщение при пустом списке товаров или если ничего не найдено в поиске -->
   <h3 v-if="products.length === 0">
     В списке больше нет товаров
   </h3>
@@ -34,15 +36,15 @@ export default {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 20px;
     width: 100%;
-
-    h3 {
-      font-size: 20px;
-      text-align: center;
-      margin: 50px 0;
-    }
   }
 
-  // transition-group
+  h3 {
+    font-size: 20px;
+    text-align: center;
+    margin: 50px 0;
+  }
+
+  // transition-group для списка товара при добавлении, удалении, поиске и сортировки
   .product-list-enter-active {
     transition: all 0.5s ease-out;
   }

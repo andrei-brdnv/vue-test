@@ -1,15 +1,18 @@
 <template>
+  <!-- Главная страница -->
   <div class="main-page">
+    <!-- Иконка показа формы для добавления на мобильных устройствах -->
     <div
-        class="main-page_open-form-icon"
-        @click="openMobileForm"
+      class="main-page_open-form-icon"
+      @click="openMobileForm"
     >
       <font-awesome-icon icon="plus" />
     </div>
-
+    <!-- Компонента формы -->
     <product-form />
-    <div class="main-page_content">
 
+    <div class="main-page_content">
+      <!-- Верхняя часть страницы с поиском и селектом -->
       <div class="main-page_content-header">
         <search-input />
         <custom-select
@@ -18,9 +21,9 @@
           :options="sortOptions"
         />
       </div>
-
+      <!-- Список товаров -->
       <product-list
-          :products="sortedAndSearchedProducts"
+        :products="sortedAndSearchedProducts"
       />
     </div>
   </div>
@@ -43,9 +46,9 @@ export default {
   methods: {
     ...mapMutations({
       setSelectedSort: 'products/setSelectedSort',
-      setSearchQuery: 'products/setSearchQuery',
       setIsMobileFormOpened: 'products/setIsMobileFormOpened',
     }),
+    // Функция открытия формы на мобильных устройствах по клику на иконку main-page_open-form-icon
     openMobileForm() {
       this.setIsMobileFormOpened(true)
       document.body.style.overflow = 'hidden'
@@ -54,13 +57,13 @@ export default {
 
   computed: {
     ...mapState({
-      products: state => state.products.products,
+      // Передаём в UI компоненту CustomSelect. Связываем выбранную option c vuex
       selectedSort: state => state.products.selectedSort,
+      // Передаём в UI компоненту CustomSelect массив options
       sortOptions: state => state.products.sortOptions,
-      //isMobileFormOpened: state => state.products.isMobileFormOpened
     }),
     ...mapGetters({
-      sortedProducts: 'products/sortedProducts',
+      // Передаём в компоненту ProductList, уже отсортированные товары по селекту и поиску
       sortedAndSearchedProducts: 'products/sortedAndSearchedProducts',
     }),
   }
@@ -90,23 +93,6 @@ export default {
     }
   }
 
-  /*.main-content {
-    width: 100%;
-    padding-left: 372px;
-  }
-
-  .main-upper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 20px;
-  }
-
-  .open-form-button {
-    display: none;
-  }*/
-
   @media screen and (max-width: 768px) {
     .main-page {
       position: relative;
@@ -135,32 +121,6 @@ export default {
         padding-left: 0;
       }
     }
-    /*.open-form-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: #90a4ae;
-      margin-bottom: 20px;
-
-      svg {
-        font-size: 20px;
-        color: #3F3F3F;
-      }
-    }*/
-
-    /*.container {
-      position: relative;
-      flex-direction: column;
-      width: 100%;
-    }
-
-    .main-content {
-      width: 100%;
-      padding-left: 0;
-    }*/
   }
 
   @media screen and (max-width: 480px) {
