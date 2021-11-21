@@ -45,7 +45,7 @@ export const productsModule = {
                     || product.description?.toLowerCase().includes(state.searchQuery.toLowerCase())
                 )
             })
-        }
+        },
     },
 
     mutations: {

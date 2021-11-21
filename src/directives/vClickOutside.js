@@ -1,3 +1,5 @@
+// https://stackoverflow.com/questions/36170425/detect-click-outside-element
+
 export default {
     beforeMount: (el, binding) => {
         el.clickOutsideEvent = event => {
