@@ -1,10 +1,10 @@
 <template>
   <div
-      :class="[isMobileFormOpened ? 'active' : '', 'form-container']"
+      :class="[isMobileFormOpened ? 'active' : '', 'product-form']"
   >
-    <div class="form-header">
+    <div class="product-form_header">
       <h3>Добавление товара</h3>
-      <div class="close-form-button">
+      <div class="product-form_close-icon">
         <font-awesome-icon
             icon="times"
             @click="closeMobileForm"
@@ -14,56 +14,61 @@
     </div>
 
 
-    <form class="form" @submit.prevent="submit">
-      <p class="form-item">
+    <form class="product-form_form" @submit.prevent="submit">
+      <p class="product-form_form-item">
         <label :for=product.title>Наименование товара</label>
         <input
-            :class="[errors.title.length ? 'error' : '', 'form-input']"
+            :class="[errors.title.length ? 'error' : '', 'product-form_form-input']"
             v-model="product.title"
             @input="validateTitle"
             type="text"
             placeholder="Введите наименование товара"
         />
-        <span class="form-error" v-if="errors.title">{{ errors.title[0] }}</span>
+        <span class="product-form_form-error" v-if="errors.title">{{ errors.title[0] }}</span>
       </p>
 
-      <p class="form-item">
+      <p class="product-form_form-item">
         <label :for="product.description">Описание товара</label>
         <textarea
-            class="form-textarea"
+            class="product-form_form-textarea"
             v-model="product.description"
             placeholder="Введите описание товара"
         >
         </textarea>
       </p>
 
-      <p class="form-item">
+      <p class="product-form_form-item">
         <label :for="product.description">Ссылка на изображение товара</label>
         <input
-            :class="[errors.image.length ? 'error' : '', 'form-input']"
+            :class="[errors.image.length ? 'error' : '', 'product-form_form-input']"
             v-model="product.image"
             @input="validateImage"
             type="text"
             placeholder="Введите ссылку"
         />
-        <span class="form-error" v-if="errors.image">{{ errors.image[0] }}</span>
+        <span class="product-form_form-error" v-if="errors.image">{{ errors.image[0] }}</span>
       </p>
 
-      <p class="form-item">
+      <p class="product-form_form-item">
         <label :for="product.price">Цена товара</label>
         <input
-            :class="[errors.price.length ? 'error' : '', 'form-input']"
+            :class="[errors.price.length ? 'error' : '', 'product-form_form-input']"
             v-model="product.price"
             @input="validatePrice"
             v-maska="formattedInputPrice"
             type="text"
             placeholder="Введите цену"
         />
-        <span class="form-error" v-if="errors.price">{{ errors.price[0] }}</span>
+        <span class="product-form_form-error" v-if="errors.price">{{ errors.price[0] }}</span>
       </p>
 
-      <button class="submit-button" type="submit" value="">Добавить товар</button>
+      <button class="product-form_form-submit-button" type="submit" value="">Добавить товар</button>
+      <transition name="message">
+        <div v-if="isProductCreated" class="product-form_success-message">Товар успешно добавлен в список</div>
+      </transition>
     </form>
+
+
   </div>
 </template>
 
@@ -93,7 +98,8 @@ export default {
 
   computed: {
     ...mapState({
-      isMobileFormOpened: state => state.products.isMobileFormOpened
+      isMobileFormOpened: state => state.products.isMobileFormOpened,
+      isProductCreated: state => state.products.isProductCreated
     }),
   },
 
@@ -101,6 +107,7 @@ export default {
     ...mapMutations({
       createProduct: 'products/createProduct',
       setIsMobileFormOpened: 'products/setIsMobileFormOpened',
+      setIsProductCreated: 'products/setIsProductCreated',
     }),
 
     closeMobileForm() {
@@ -111,6 +118,7 @@ export default {
     validateTitle(event) {
       const { value } = event.target
       this.errors.title = []
+      this.product.title = value
 
       if (!value) this.errors.title.push('Поле является обязательным')
     },
@@ -150,6 +158,11 @@ export default {
 
         this.createProduct(this.product)
 
+        this.setIsProductCreated(true)
+        setTimeout(() => {
+          this.setIsProductCreated(false)
+        }, 3000)
+
         this.product = {
           title: null,
           description: null,
@@ -163,7 +176,143 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .form-container {
+  .product-form {
+    position: fixed;
+
+    &_header {
+      margin-bottom: 20px;
+
+      h3 {
+        line-height: 36px;
+      }
+    }
+
+    &_close-icon {
+      display: none;
+    }
+
+    &_form {
+      display: flex;
+      flex-direction: column;
+      padding: 24px 24px 14px 24px;
+      width: 340px;
+
+      font-family: "Source Sans Pro", sans-serif;
+      font-style: normal;
+      font-weight: normal;
+
+      background: #FFFEFB;
+      box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04), 0px 6px 10px rgba(0, 0, 0, 0.02);
+      border-radius: 4px;
+    }
+
+    &_form-item {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    &_form-item:last-of-type {
+      margin-bottom: 32px;
+    }
+
+    &_form-item:not(:nth-child(2)) label::after {
+      content: "\2022";
+      position: absolute;
+      top: -5px;
+
+      color: #FF8484;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 15px;
+      line-height: 15px;
+      color: #49485E;
+      position: relative;
+    }
+
+    &_form-input {
+
+      &.error {
+        border: 1px solid #FF8484;
+      }
+    }
+
+    &_form-textarea {
+      line-height: 18px;
+      resize: vertical;
+      min-height: 100px;
+      max-height: 200px;
+    }
+
+    &_form-error {
+      position: absolute;
+      top: 62px;
+      left: 0;
+      font-size: 12px;
+      color: #FF8484;
+    }
+
+    &_form-submit-button {
+      font-family: "Inter", sans-serif;
+      font-size: 14px;
+      line-height: 14px;
+
+      height: 36px;
+      margin-bottom: 10px;
+      border: none;
+      cursor: pointer;
+      color: #FFFFFF;
+      background-color: #7BAE73;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    &_success-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      width: 100%;
+      text-align: center;
+      //transition: all 0.5s ease-out;
+
+      //background: linear-gradient(-45deg, rgba(238, 119, 82, 0.5), rgba(231, 60, 126, 0.5), rgba(35, 166, 213, 0.5), rgba(35, 213, 171, 0.5));
+      //background-size: 100% 100%;
+      //animation: Gradient 3s ease infinite;
+      //overflow: hidden;
+
+      background: linear-gradient(to right, #388e3c 40%, #fff9c4 48%, #fff9c4 52%, #388e3c 60%);
+      background-size: 200% auto;
+      animation: shine 3s linear 1s 1;
+      @keyframes shine {
+        to {
+          background-position: 200% center;
+        }
+      }
+
+      color: white;
+      background-clip: content-box;
+      text-fill-color: transparent;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    // transition
+    .message-enter-active,
+    .message-leave-active {
+      transition: opacity 0.75s ease-out;
+    }
+
+    .message-enter-from,
+    .message-leave-to {
+      opacity: 0;
+    }
+  }
+  /*.form-container {
     position: fixed;
   }
 
@@ -182,7 +331,7 @@ export default {
   .form {
     display: flex;
     flex-direction: column;
-    padding: 24px;
+    padding: 24px 24px 14px 24px;
     width: 340px;
 
     font-family: "Source Sans Pro", sans-serif;
@@ -199,6 +348,10 @@ export default {
     flex-direction: column;
     position: relative;
     margin-bottom: 24px;
+  }
+
+  .form-item:last-of-type {
+    margin-bottom: 32px;
   }
 
   .form-item:not(:nth-child(2)) label::after {
@@ -218,31 +371,6 @@ export default {
     position: relative;
   }
 
-  .form-input,
-  .form-textarea {
-    font-family: "Source Sans Pro", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 36px;
-
-    padding: 10px 16px;
-    height: 36px;
-    border: 1px solid transparent;
-    background: #FFFEFB;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-
-    &:focus,
-    &:hover {
-      outline: none;
-    }
-
-    &::placeholder {
-      font-size: 14px;
-      color: #B4B4B4;
-    }
-  }
 
   .form-input {
     &.error {
@@ -271,6 +399,7 @@ export default {
     line-height: 14px;
 
     height: 36px;
+    margin-bottom: 10px;
     border: none;
     cursor: pointer;
     color: #FFFFFF;
@@ -279,7 +408,90 @@ export default {
     border-radius: 10px;
   }
 
+  .success-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    //transition: all 0.5s ease-out;
+
+    //background: linear-gradient(-45deg, rgba(238, 119, 82, 0.5), rgba(231, 60, 126, 0.5), rgba(35, 166, 213, 0.5), rgba(35, 213, 171, 0.5));
+    //background-size: 100% 100%;
+    //animation: Gradient 3s ease infinite;
+    //overflow: hidden;
+
+    background: linear-gradient(to right, #388e3c 40%, #fff9c4 48%, #fff9c4 52%, #388e3c 60%);
+    background-size: 200% auto;
+    animation: shine 3s linear 1s 1;
+    @keyframes shine {
+      to {
+        background-position: 200% center;
+      }
+    }
+
+    color: white;
+    background-clip: content-box;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .message-enter-active,
+  .message-leave-active {
+    transition: opacity 0.75s ease-out;
+  }
+
+  .message-enter-from,
+  .message-leave-to {
+    opacity: 0;
+  }*/
+
   @media screen and (max-width: 768px) {
+    .product-form {
+      transform: translateX(-100%);
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      width: 100%;
+      height: 100vh;
+      background: #FFFEFB;
+      opacity: 0.75;
+      padding-top: 32px;
+      transition: all 0.3s ease-out;
+
+      &.active {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      &_header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        margin-bottom: 0;
+
+        h3 {
+          font-size: 20px;
+        }
+      }
+
+      &_close-icon {
+        display: block;
+        padding: 10px;
+        font-size: 20px;
+        color: #3F3F3F;
+      }
+
+      &_form {
+        width: 100%;
+        min-height: 100vh;
+        padding: 12px;
+      }
+    }
     .form-container {
       transform: translateX(-100%);
       top: 0;
@@ -320,7 +532,7 @@ export default {
 
     .form {
       width: 100%;
-      height: 100%;
+      min-height: 100vh;
       padding: 12px;
     }
   }

@@ -1,6 +1,6 @@
 <template>
     <select @change="handleOptionChange">
-      <option selected hidden>По умолчанию</option>
+      <option selected>По умолчанию</option>
       <option
           v-for="option in options"
           :key="option.value"
@@ -36,7 +36,7 @@ export default {
 <style lang="scss" scoped>
   select {
     font-family: "Source Sans Pro", sans-serif;
-    font-size: 14px;
+    font-size: 16px;
 
     padding: 0 10px;
     height: 36px;

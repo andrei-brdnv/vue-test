@@ -6,6 +6,7 @@ export const productsModule = {
         searchQuery: '',
         selectedSort: '',
         isMobileFormOpened: false,
+        isProductCreated: false,
         sortOptions: [
             {value: 'title', name: 'По названию'},
             {value: 'descPrice', name: 'Цена по убыванию'},
@@ -44,6 +45,9 @@ export const productsModule = {
     mutations: {
         setIsMobileFormOpened(state, bool) {
             state.isMobileFormOpened = bool
+        },
+        setIsProductCreated(state, bool) {
+            state.isProductCreated = bool
         },
         setSearchQuery(state, searchQuery) {
             state.searchQuery = searchQuery

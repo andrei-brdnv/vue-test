@@ -70,7 +70,33 @@ export default {
   h3 {
     font-weight: 600;
     font-size: 28px;
-
     color: #3F3F3F;
+  }
+
+  input,
+  textarea {
+    font-family: "Source Sans Pro", sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 36px;
+
+    padding: 10px 16px;
+    height: 36px;
+    width: 100%;
+    border: 1px solid transparent;
+    background: #FFFEFB;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+
+    &:focus,
+    &:hover {
+      outline: none;
+    }
+
+    &::placeholder {
+      font-size: 14px;
+      color: #B4B4B4;
+    }
   }
 </style>

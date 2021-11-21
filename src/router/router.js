@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Main from "@/pages/Main";
+import MainPage from "@/pages/MainPage";
 import ProductPage from "@/pages/ProductPage";
 
 const routes = [
     {
         path: '/',
-        component: Main,
+        component: MainPage,
     },
     {
         path: '/products/:id',

@@ -1,16 +1,16 @@
 <template>
-  <div class="container">
+  <div class="main-page">
     <div
-        class="open-form-button"
+        class="main-page_open-form-icon"
         @click="openMobileForm"
     >
       <font-awesome-icon icon="plus" />
     </div>
 
     <product-form />
-    <div class="main-content">
+    <div class="main-page_content">
 
-      <div class="main-upper">
+      <div class="main-page_content-header">
         <search-input />
         <custom-select
           :model-value="selectedSort"
@@ -68,12 +68,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .main-page {
     display: flex;
     padding: 32px;
+
+    &_open-form-icon {
+      display: none;
+    }
+
+    &_content {
+      width: 100%;
+      padding-left: 372px;
+    }
+
+    &_content-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 20px;
+    }
   }
 
-  .main-content {
+  /*.main-content {
     width: 100%;
     padding-left: 372px;
   }
@@ -88,10 +105,37 @@ export default {
 
   .open-form-button {
     display: none;
-  }
+  }*/
 
   @media screen and (max-width: 768px) {
-    .open-form-button {
+    .main-page {
+      position: relative;
+      flex-direction: column;
+      padding: 32px 12px;
+      width: 100%;
+
+      &_open-form-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #90a4ae;
+        margin-bottom: 20px;
+
+        svg {
+          font-size: 20px;
+          color: #3F3F3F;
+        }
+      }
+
+      &_content {
+        width: 100%;
+        padding-left: 0;
+      }
+    }
+    /*.open-form-button {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -105,9 +149,9 @@ export default {
         font-size: 20px;
         color: #3F3F3F;
       }
-    }
+    }*/
 
-    .container {
+    /*.container {
       position: relative;
       flex-direction: column;
       width: 100%;
@@ -116,18 +160,15 @@ export default {
     .main-content {
       width: 100%;
       padding-left: 0;
-    }
-  }
-
-  @media screen and (max-width: 768px) {
-    .container {
-      padding: 32px 12px;
-    }
+    }*/
   }
 
   @media screen and (max-width: 480px) {
-    .main-upper {
-      flex-direction: column;
+    .main-page {
+
+      &_content-header {
+        flex-direction: column;
+      }
     }
   }
 </style>

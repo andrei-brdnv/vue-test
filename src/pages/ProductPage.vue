@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="product-page">
     <div @click="$router.push('/')">
       <font-awesome-icon icon="arrow-left" />
     </div>
@@ -20,7 +20,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
+  .product-page {
     padding: 32px;
+
+    h3 {
+      font-size: 20px;
+      padding: 20px 0;
+    }
   }
 </style>

@@ -33,24 +33,22 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 20px;
-
     width: 100%;
+
+    h3 {
+      font-size: 20px;
+      text-align: center;
+      margin: 50px 0;
+    }
   }
 
-  h3 {
-    font-size: 20px;
-    text-align: center;
-    margin: 50px 0;
-  }
-
-  // Transition Group
+  // transition-group
   .product-list-enter-active {
     transition: all 0.5s ease-out;
   }
 
   .product-list-leave-active {
     transition: all 0.35s cubic-bezier(1, 0.5, 0.8, 1);
-    //transition: all 0.4s ease-out;
   }
 
   .product-list-leave-to {
