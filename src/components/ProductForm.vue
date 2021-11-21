@@ -164,7 +164,7 @@ export default {
       if (!this.product.image && !this.errors.image.length) this.errors.image.push('Поле является обязательным')
       if (!this.product.price && !this.errors.price.length) this.errors.price.push('Поле является обязательным')
 
-      if (this.product.title && this.product.image && this.product.price) {
+      if (this.product.title && this.product.image && this.product.price && !this.errors.image.length) {
         this.product.id = Date.now()
         // В массив данных добавляем сумму без пробела
         this.product.price = this.product.price.replace(/\s/g, '')

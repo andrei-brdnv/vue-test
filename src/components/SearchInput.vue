@@ -47,7 +47,7 @@ export default {
   @media screen and (max-width: 480px) {
     .search-input {
       margin-right: 0;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
   }
 </style>
