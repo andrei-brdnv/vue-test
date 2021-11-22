@@ -5,6 +5,7 @@ import createPersistedState from "vuex-persistedstate";
 // Связываем список товаров из vuex с localStorage
 const productState = createPersistedState({
     paths: ['products.products'],
+    key: 'vue-test',
 })
 
 export const store = createStore({

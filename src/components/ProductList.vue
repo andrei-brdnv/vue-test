@@ -44,7 +44,7 @@ export default {
     margin: 50px 0;
   }
 
-  // transition-group для списка товара при добавлении, удалении, поиске и сортировки
+  // transition-group для списка товара при добавлении, удалении, поиске и сортировке
   .product-list-enter-active {
     transition: all 0.5s ease-out;
   }
@@ -54,6 +54,7 @@ export default {
   }
 
   .product-list-leave-to {
+    // important из-за проблем с hover transform scale на карточке товара
     transform: scale(0) !important;
     opacity: 0;
   }

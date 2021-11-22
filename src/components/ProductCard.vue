@@ -119,17 +119,22 @@ export default {
       width: 32px;
       height: 32px;
       cursor: pointer;
-      background-color: #FF8484;
+      background-color: $lightred;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
       transition: box-shadow 0.15s ease-out;
 
       &:hover {
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.75);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.65);
 
         svg {
           transform: scale(1.15);
         }
+      }
+
+      &:active {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.85);
+        transform: scale(.95);
       }
 
       svg {

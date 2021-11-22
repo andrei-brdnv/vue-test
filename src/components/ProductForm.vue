@@ -72,8 +72,6 @@
         </div>
       </transition>
     </form>
-
-
   </div>
 </template>
 
@@ -170,7 +168,7 @@ export default {
         this.product.price = this.product.price.replace(/\s/g, '')
 
         this.createProduct(this.product)
-        // Показываем сообщение об успешном добавлении под кнопкой добавить товар
+        // Показываем сообщение в течение 3 секунд об успешном добавлении под кнопкой добавить товар
         this.setIsProductCreated(true)
         setTimeout(() => {
           this.setIsProductCreated(false)
@@ -215,7 +213,7 @@ export default {
       font-weight: normal;
 
       background: #FFFEFB;
-      box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04), 0px 6px 10px rgba(0, 0, 0, 0.02);
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.04), 0 6px 10px rgba(0, 0, 0, 0.02);
       border-radius: 4px;
     }
 
@@ -229,13 +227,13 @@ export default {
     &_form-item:last-of-type {
       margin-bottom: 32px;
     }
-
+    // Ставим красную точку у названий всех полей ввода кроме textarea
     &_form-item:not(:nth-child(2)) label::after {
       content: "\2022";
       position: absolute;
       top: -5px;
 
-      color: #FF8484;
+      color: $lightred;
     }
 
     label {
@@ -250,7 +248,7 @@ export default {
     &_form-input {
 
       &.error {
-        border: 1px solid #FF8484;
+        border: 1px solid $lightred;
       }
     }
 
@@ -274,7 +272,7 @@ export default {
       top: 62px;
       left: 0;
       font-size: 12px;
-      color: #FF8484;
+      color: $lightred;
     }
 
     &_form-submit-button {
@@ -288,8 +286,18 @@ export default {
       cursor: pointer;
       color: #FFFFFF;
       background-color: #7BAE73;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
+
+      &:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transform: scale(1.015);
+      }
+
+      &:active {
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
+        transform: scale(.999);
+      }
     }
 
     &_success-message {
@@ -317,7 +325,7 @@ export default {
       -webkit-text-fill-color: transparent;
     }
 
-    // transition для сообщения об успешном добавлении товара внизу формы
+    // transition для сообщения внизу формы об успешном добавлении товара
     .message-enter-active,
     .message-leave-active {
       transition: opacity 0.75s ease-out;
