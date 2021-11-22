@@ -1,5 +1,5 @@
 module.exports = {
-    publicPath: '/vue-test',
+    publicPath: '/',
     css: {
         loaderOptions: {
             sass: {
