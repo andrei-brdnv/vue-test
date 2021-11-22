@@ -86,10 +86,11 @@ export default {
     width: 100%;
     border: 1px solid transparent;
     background: #FFFEFB;
+    border-radius: 4px;
+
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     -webkit-appearance: none;
-    border-radius: 4px;
 
     &:focus,
     &:hover {

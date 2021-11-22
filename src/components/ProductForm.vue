@@ -380,6 +380,22 @@ export default {
         min-height: 100vh;
         padding: 12px;
       }
+
+      &_form-input {
+        font-size: 16px;
+
+        &::placeholder {
+          font-size: 16px;
+        }
+      }
+
+      &_form-textarea {
+        font-size: 16px;
+
+        &::placeholder {
+          font-size: 16px;
+        }
+      }
     }
   }
 </style>

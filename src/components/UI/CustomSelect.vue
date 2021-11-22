@@ -40,18 +40,23 @@ export default {
     font-style: normal;
     font-weight: normal;
 
-    padding: 0 12px;
+    padding: 0 16px;
+    -moz-padding-start: 12px;
+    -webkit-padding-start: 16px;
     height: 36px;
     line-height: 36px;
 
     border: 1px solid transparent;
     background: #FFFEFB;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    -webkit-appearance: none;
     border-radius: 4px;
     color: #B4B4B4;
     cursor: pointer;
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
   }
 
   @media screen and (max-width: 480px) {
