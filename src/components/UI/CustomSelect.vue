@@ -54,9 +54,6 @@ export default {
 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
   }
 
   @media screen and (max-width: 480px) {
