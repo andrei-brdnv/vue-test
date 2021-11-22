@@ -87,6 +87,7 @@ export default {
     border: 1px solid transparent;
     background: #FFFEFB;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
 
     &:focus,

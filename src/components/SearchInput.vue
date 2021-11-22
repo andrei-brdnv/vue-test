@@ -40,6 +40,7 @@ export default {
 
       &::placeholder {
         font-size: 16px;
+        color: #B4B4B4;
       }
     }
   }
