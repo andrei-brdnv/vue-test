@@ -59,6 +59,10 @@ export default {
   @media screen and (max-width: 480px) {
     select {
       width: 100%;
+
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
   }
 </style>

@@ -1,6 +1,10 @@
 <template>
   <!-- Динамический класс для показа формы добавления товара на мобильных устройствах -->
-  <div :class="[isMobileFormOpened ? 'active' : '', 'product-form']" v-click-outside="onClickOutside">
+  <div
+      :class="[isMobileFormOpened ? 'active' : '', 'product-form']"
+      v-click-outside="onClickOutside"
+      @focus.capture="handleFocus"
+  >
     <div class="product-form_header">
       <h3>Добавление товара</h3>
       <div class="product-form_close-icon">
@@ -17,13 +21,13 @@
       <p class="product-form_form-item">
         <label :for=product.title>Наименование товара</label>
         <input
-            :class="[errors.title.length ? 'error' : '', 'product-form_form-input']"
+            :class="[errors.title.length && showInputErrors ? 'error' : '', 'product-form_form-input']"
             v-model="product.title"
             @input="validateTitle"
             type="text"
             placeholder="Введите наименование товара"
         />
-        <span class="product-form_form-error" v-if="errors.title">{{ errors.title[0] }}</span>
+        <span class="product-form_form-error" v-if="errors.title && showInputErrors">{{ errors.title[0] }}</span>
       </p>
       <!-- Элемент поля добавления описания товара product.description -->
       <p class="product-form_form-item">
@@ -39,26 +43,26 @@
       <p class="product-form_form-item">
         <label :for="product.description">Ссылка на изображение товара</label>
         <input
-            :class="[errors.image.length ? 'error' : '', 'product-form_form-input']"
+            :class="[errors.image.length && showInputErrors ? 'error' : '', 'product-form_form-input']"
             v-model="product.image"
             @input="validateImage"
             type="text"
             placeholder="Введите ссылку"
         />
-        <span class="product-form_form-error" v-if="errors.image">{{ errors.image[0] }}</span>
+        <span class="product-form_form-error" v-if="errors.image && showInputErrors">{{ errors.image[0] }}</span>
       </p>
       <!-- Элемент поля добавления цены товара product.price -->
       <p class="product-form_form-item">
         <label :for="product.price">Цена товара</label>
         <input
-            :class="[errors.price.length ? 'error' : '', 'product-form_form-input']"
+            :class="[errors.price.length && showInputErrors ? 'error' : '', 'product-form_form-input']"
             v-model="product.price"
             @input="validatePrice"
             v-maska="formattedInputPrice"
             type="text"
             placeholder="Введите цену"
         />
-        <span class="product-form_form-error" v-if="errors.price">{{ errors.price[0] }}</span>
+        <span class="product-form_form-error" v-if="errors.price && showInputErrors">{{ errors.price[0] }}</span>
       </p>
 
       <button class="product-form_form-submit-button" type="submit" value="">Добавить товар</button>
@@ -87,6 +91,7 @@ export default {
   data: () => ({
     // Маска для поля ввода цены
     formattedInputPrice,
+    showInputErrors: false,
     product: {
       title: null,
       description: null,
@@ -113,9 +118,15 @@ export default {
       setIsMobileFormOpened: 'products/setIsMobileFormOpened',
       setIsProductCreated: 'products/setIsProductCreated',
     }),
-    // Используем клик вне области формы, чтобы сбросить сообщения об ошибках в инпутах
+    // Используем чтобы показать ошибки при фокусе на форму
+    handleFocus() {
+      this.showInputErrors = true
+      console.log('click inside form')
+    },
+    // Используем клик вне области формы, чтобы не показывать сообщения об ошибках
     onClickOutside() {
-      Object.keys(this.errors).map(key => this.errors[key] = [])
+      this.showInputErrors = false
+      // Object.keys(this.errors).map(key => this.errors[key] = [])
     },
     // Обработка закрытия формы на мобильных устройствах, возвращение скролла на body
     closeMobileForm() {
@@ -141,6 +152,7 @@ export default {
           '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
           '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
           '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+
       // Если поле ещё пустое, показываем сообщение об ошибке
       if (!value) this.errors.image.push('Поле является обязательным')
       // Если не добавлен URL, показываем сообщение об ошибке
@@ -288,6 +300,7 @@ export default {
       background-color: #7BAE73;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
+      transition: all 0.2s ease-out;
 
       &:hover {
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
