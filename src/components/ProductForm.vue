@@ -121,7 +121,6 @@ export default {
     // Используем чтобы показать ошибки при фокусе на форму
     handleFocus() {
       this.showInputErrors = true
-      console.log('click inside form')
     },
     // Используем клик вне области формы, чтобы не показывать сообщения об ошибках
     onClickOutside() {

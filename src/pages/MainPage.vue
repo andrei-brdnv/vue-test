@@ -33,7 +33,6 @@
 import ProductForm from "@/components/ProductForm";
 import ProductList from "@/components/ProductList";
 import SearchInput from "@/components/SearchInput";
-import CustomSelect from "@/components/UI/CustomSelect";
 import { mapState, mapGetters, mapMutations } from "vuex";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -41,7 +40,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 library.add(faPlus)
 
 export default {
-  components: { ProductForm, ProductList, SearchInput, CustomSelect },
+  components: { ProductForm, ProductList, SearchInput },
 
   methods: {
     ...mapMutations({
