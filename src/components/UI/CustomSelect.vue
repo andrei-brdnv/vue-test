@@ -82,7 +82,7 @@ export default {
       background: #FFFEFB;
       height: 36px;
       line-height: 36px;
-      width: 30px;
+      width: 26px;
       pointer-events: none;
 
       svg {
